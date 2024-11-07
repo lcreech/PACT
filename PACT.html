@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PACT Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>PACT Habit Tracker</h1>
+    </header>
+
+    <!-- Progress Summary Section -->
+    <div class="progress-summary">
+        <div id="physical-progress" class="progress-item">Physical: 0%</div>
+        <div id="academic-progress" class="progress-item">Academic: 0%</div>
+        <div id="creative-progress" class="progress-item">Creative: 0%</div>
+        <div id="tiered-progress" class="progress-item">Tiered: 0%</div>
+    </div>
+
+    <!-- Daily Action Panel -->
+    <section id="daily-action-panel">
+        <h2>Daily Actions</h2>
+        <div id="checklist">
+            <label>
+                <input type="checkbox" id="physical-habit"> Physical Habit
+            </label>
+            <label>
+                <input type="checkbox" id="academic-habit"> Academic Habit
+            </label>
+            <label>
+                <input type="checkbox" id="creative-habit"> Creative Habit
+            </label>
+            <label>
+                <input type="checkbox" id="tiered-habit"> Tiered Habit
+            </label>
+        </div>
+
+        <textarea id="reflection" placeholder="Enter your daily reflection..."></textarea>
+    </section>
+
+    <!-- Habit Log Section -->
+    <section id="categories">
+        <h2>Physical</h2>
+        <ul id="physical-log" class="habit-log">
+            <!-- Habit items for Physical will go here -->
+        </ul>
+        <button class="add-habit-btn" onclick="addHabit('physical')">Add Physical Habit</button>
+
+        <h2>Academic</h2>
+        <ul id="academic-log" class="habit-log">
+            <!-- Habit items for Academic will go here -->
+        </ul>
+        <button class="add-habit-btn" onclick="addHabit('academic')">Add Academic Habit</button>
+
+        <h2>Creative/Career</h2>
+        <ul id="creative-log" class="habit-log">
+            <!-- Habit items for Creative will go here -->
+        </ul>
+        <button class="add-habit-btn" onclick="addHabit('creative')">Add Creative Habit</button>
+
+        <h2>Tiered</h2>
+        <ul id="tiered-log" class="habit-log">
+            <!-- Habit items for Tiered will go here -->
+        </ul>
+        <button class="add-habit-btn" onclick="addHabit('tiered')">Add Tiered Habit</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
