@@ -1,171 +1,100 @@
-/* General Reset and Body Styling */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* General styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #121212; /* Dark background */
-    color: #E0E0E0; /* Light text color for contrast */
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Styling the habit list */
+.habit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    line-height: 1.6;
+    gap: 10px; /* Add space between each habit item */
 }
 
-/* Header Styling */
-header {
-    background-color: #1F1F1F;
-    width: 100%;
-    padding: 1.5em 0;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-header h1 {
-    color: #BB86FC; /* Soft purple accent */
-    font-size: 2em;
-}
-
-.progress-summary {
+/* Each habit item */
+.habit-item {
     display: flex;
-    justify-content: center;
-    margin-top: 1em;
-    gap: 1em;
-}
-
-.progress-item {
-    background-color: #333333;
-    color: #E0E0E0;
-    padding: 0.75em 1.5em;
-    border-radius: 5px;
-    font-weight: bold;
-    text-align: center;
-    min-width: 80px;
-}
-
-/* Daily Action Panel Styling */
-#daily-action-panel {
-    background-color: #1F1F1F;
-    border-radius: 10px;
-    border: 1px solid #333333;
-    width: 90%;
-    max-width: 600px;
-    padding: 1.5em;
-    margin-top: 1.5em;
-}
-
-#daily-action-panel h2 {
-    color: #BB86FC;
-    font-size: 1.5em;
-    margin-bottom: 1em;
-}
-
-#checklist label {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    background-color: #333333;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-    border-radius: 5px;
-    color: #E0E0E0;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-#checklist input[type="checkbox"] {
-    accent-color: #BB86FC; /* Custom checkbox color */
-    transform: scale(1.2);
-}
-
-textarea {
-    width: 100%;
-    background-color: #333333;
-    border: 1px solid #555555;
-    color: #E0E0E0;
-    padding: 0.75em;
-    border-radius: 5px;
-    margin-top: 1em;
-    resize: none;
-}
-
-/* Habit Log Styling */
-.habit-log {
-    list-style-type: none;
-    padding: 0;
-    margin: 1em 0;
-    background-color: #2A2A2A; /* Darker background for the log */
-    border-radius: 10px;
-    padding: 1em;
-}
-
-.habit-log li {
-    background-color: #333333;
-    color: #E0E0E0;
-    padding: 0.75em;
-    margin-bottom: 0.75em;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    transition: background-color 0.3s ease;
-}
-
-.habit-log li:hover {
-    background-color: #444444; /* Slightly lighter on hover */
-}
-
-.habit-log li input[type="checkbox"] {
-    margin-right: 1em;
-    accent-color: #BB86FC; /* Accent color for checkboxes */
-}
-
-button {
-    background-color: #BB86FC;
+    align-items: center; /* Aligns the button and text properly */
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
     color: white;
-    padding: 0.75em 1.5em;
-    margin-top: 1em;
-    border-radius: 5px;
+    font-size: 16px;
+}
+
+.habit-item button {
+    background-color: #ff4d4d;
+    color: white;
     border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #9b72d7;
+.habit-item button:hover {
+    background-color: #ff2d2d;
 }
 
-/* Dark Mode for Progress Bars */
-.progress-bar {
-    background-color: #333333;
+/* Input styles */
+input[type="text"] {
+    padding: 10px;
+    border: none;
     border-radius: 5px;
-    overflow: hidden;
-    margin-top: 0.5em;
-    height: 1.25em;
+    font-size: 16px;
+    width: 80%;
+    margin: 20px 0;
 }
 
-.progress-bar div {
-    height: 100%;
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
     border-radius: 5px;
-    transition: width 0.3s ease;
+    transition: background-color 0.3s;
 }
 
-/* Progress Colors */
-#physical-progress div { background-color: #F28C28; }  /* Orange for Physical */
-#academic-progress div { background-color: #4CAF50; }  /* Green for Academic */
-#creative-progress div { background-color: #2196F3; }  /* Blue for Creative */
-#tiered-progress div { background-color: #9C27B0; }    /* Purple for Tiered */
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .progress-summary {
-        flex-direction: column;
-        align-items: center;
+/* Habit List Header */
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Layout for the main content */
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Error message styles */
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Optional: Centering content for smaller screen sizes */
+@media screen and (max-width: 600px) {
+    input[type="text"] {
+        width: 100%;
     }
-    #categories, #daily-action-panel {
-        width: 95%;
+    button[type="submit"] {
+        width: 100%;
     }
 }
