@@ -1,77 +1,94 @@
-// Load saved habits when the page loads
-window.onload = () => {
-    loadHabits();
-};
+// Initialize streaks, max streaks, streak dates, and habit names
+const streaks = { physical: 0, academic: 0, creative: 0, tiered: 0 };
+const maxStreaks = { physical: 0, academic: 0, creative: 0, tiered: 0 };
+const streakDates = { physical: [], academic: [], creative: [], tiered: [] };
+const habitLog = { physical: new Set(), academic: new Set(), creative: new Set(), tiered: new Set() };
+const habitNames = { physical: "Physical Habit", academic: "Academic Habit", creative: "Creative Habit", tiered: "Tiered Habit" };
 
-// Function to add a new habit to a specific category
-function addHabit(category) {
-    const habitName = prompt(`Enter a new habit for ${category}:`);
+// Load saved habit names from localStorage
+Object.keys(habitNames).forEach(category => {
+    const savedName = localStorage.getItem(`${category}-habit-name`);
+    if (savedName) {
+        habitNames[category] = savedName;
+        document.getElementById(`${category}-label`).textContent = savedName;
+    }
+});
 
-    if (habitName && habitName.trim()) {
-        const habit = {
-            name: habitName,
-            completed: false,
-        };
+// Toggle habit naming section visibility
+function toggleHabitNaming() {
+    const habitNamingSection = document.getElementById('habit-naming');
+    habitNamingSection.style.display = habitNamingSection.style.display === 'none' ? 'block' : 'none';
+}
 
-        // Save the new habit to LocalStorage
-        const categoryLog = getCategoryLog(category);
-        categoryLog.push(habit);
-        localStorage.setItem(category, JSON.stringify(categoryLog));
-
-        // Re-load the habit list to update the UI
-        loadHabits();
-    } else {
-        alert("Habit name cannot be empty!");
+// Set habit name and save to localStorage
+function setHabitName(category) {
+    const nameInput = document.getElementById(`${category}-name`);
+    const habitLabel = document.getElementById(`${category}-label`);
+    if (nameInput.value.trim() !== "") {
+        habitNames[category] = nameInput.value;
+        habitLabel.textContent = habitNames[category];
+        localStorage.setItem(`${category}-habit-name`, habitNames[category]);
+        nameInput.value = ""; // Clear input after setting
     }
 }
 
-// Load and display all habits for each category
-function loadHabits() {
-    const categories = ['physical', 'academic', 'creative', 'tiered'];
-    categories.forEach(category => {
-        const categoryLog = getCategoryLog(category);
-        displayHabits(category, categoryLog);
-    });
+// Complete habit and update streak
+function completeHabit(category) {
+    const today = new Date().toISOString().split('T')[0];
+    const completedToday = habitLog[category].has(today);
+
+    if (!completedToday) {
+        habitLog[category].add(today);
+        streaks[category]++;
+        maxStreaks[category] = Math.max(streaks[category], maxStreaks[category]);
+
+        // Update streak dates
+        streakDates[category].push(today);
+        updateStreakDisplay(category);
+
+        renderCalendar();
+    }
 }
 
-// Get the habit log for a specific category from LocalStorage
-function getCategoryLog(category) {
-    const log = localStorage.getItem(category);
-    return log ? JSON.parse(log) : [];
+// Update the display for streaks, max streaks, and streak dates
+function updateStreakDisplay(category) {
+    document.getElementById(`${category}-streak`).innerText = streaks[category];
+    document.getElementById(`${category}-max-streak`).innerText = maxStreaks[category];
+
+    // Display active streak dates
+    const startDate = streakDates[category][0] || "None";
+    const endDate = streakDates[category][streakDates[category].length - 1] || "None";
+    document.getElementById(`${category}-streak-dates`).innerText = `${startDate} to ${endDate}`;
 }
 
-// Display the habits for a given category
-function displayHabits(category, habits) {
-    const habitLogElement = document.getElementById(`${category}-log`);
-    habitLogElement.innerHTML = ''; // Clear the existing list
+// Render calendar with completed days
+function renderCalendar() {
+    const calendarGrid = document.getElementById("calendar-grid");
+    const calendarMonthYear = document.getElementById("calendar-month-year");
+    
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
 
-    habits.forEach((habit, index) => {
-        const habitItem = document.createElement('li');
-        habitItem.innerHTML = `
-            <label>
-                <input type="checkbox" ${habit.completed ? 'checked' : ''} onchange="toggleHabitCompletion('${category}', ${index})">
-                ${habit.name}
-            </label>
-            <button onclick="deleteHabit('${category}', ${index})">Delete</button>
-        `;
-        habitLogElement.appendChild(habitItem);
-    });
+    // Set the current month and year
+    const options = { year: 'numeric', month: 'long' };
+    calendarMonthYear.textContent = firstDay.toLocaleDateString('en-US', options);
+
+    calendarGrid.innerHTML = ""; // Clear existing days
+
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+        const date = new Date(year, month, day).toISOString().split('T')[0];
+        const dayElement = document.createElement("div");
+        dayElement.className = "calendar-day";
+        if (Object.values(habitLog).some(log => log.has(date))) {
+            dayElement.classList.add("completed");
+        }
+        dayElement.textContent = day;
+        calendarGrid.appendChild(dayElement);
+    }
 }
 
-// Toggle the completion status of a habit
-function toggleHabitCompletion(category, index) {
-    const categoryLog = getCategoryLog(category);
-    categoryLog[index].completed = !categoryLog[index].completed;
-    localStorage.setItem(category, JSON.stringify(categoryLog));
-
-    loadHabits(); // Refresh the habit list
-}
-
-// Delete a habit from a category
-function deleteHabit(category, index) {
-    const categoryLog = getCategoryLog(category);
-    categoryLog.splice(index, 1); // Remove the habit from the array
-    localStorage.setItem(category, JSON.stringify(categoryLog));
-
-    loadHabits(); // Refresh the habit list
-}
+// Initialize calendar and set saved names on load
+renderCalendar();
