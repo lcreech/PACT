@@ -11,60 +11,69 @@
         <h1>PACT Habit Tracker</h1>
     </header>
 
-    <!-- Progress Summary Section -->
+    <!-- Button to toggle habit naming section -->
+    <button id="toggle-habit-naming" onclick="toggleHabitNaming()">Set Habit Names</button>
+
+    <!-- Habit Naming Section (Hidden by Default) -->
+    <section id="habit-naming" style="display: none;">
+        <h2>Set Habit Names</h2>
+        <div>
+            <label>Physical Habit Name: <input type="text" id="physical-name" placeholder="Enter physical habit name"></label>
+            <button onclick="setHabitName('physical')">Set</button>
+        </div>
+        <div>
+            <label>Academic Habit Name: <input type="text" id="academic-name" placeholder="Enter academic habit name"></label>
+            <button onclick="setHabitName('academic')">Set</button>
+        </div>
+        <div>
+            <label>Creative Habit Name: <input type="text" id="creative-name" placeholder="Enter creative habit name"></label>
+            <button onclick="setHabitName('creative')">Set</button>
+        </div>
+        <div>
+            <label>Tiered Habit Name: <input type="text" id="tiered-name" placeholder="Enter tiered habit name"></label>
+            <button onclick="setHabitName('tiered')">Set</button>
+        </div>
+    </section>
+
+    <!-- Streak Counters Section -->
     <div class="progress-summary">
-        <div id="physical-progress" class="progress-item">Physical: 0%</div>
-        <div id="academic-progress" class="progress-item">Academic: 0%</div>
-        <div id="creative-progress" class="progress-item">Creative: 0%</div>
-        <div id="tiered-progress" class="progress-item">Tiered: 0%</div>
+        <div id="physical-progress" class="progress-item">
+            Physical Streak: <span id="physical-streak">0</span> days
+            <div>Max Streak: <span id="physical-max-streak">0</span></div>
+            <div>Active Streak Dates: <span id="physical-streak-dates">None</span></div>
+        </div>
+        <div id="academic-progress" class="progress-item">
+            Academic Streak: <span id="academic-streak">0</span> days
+            <div>Max Streak: <span id="academic-max-streak">0</span></div>
+            <div>Active Streak Dates: <span id="academic-streak-dates">None</span></div>
+        </div>
+        <div id="creative-progress" class="progress-item">
+            Creative Streak: <span id="creative-streak">0</span> days
+            <div>Max Streak: <span id="creative-max-streak">0</span></div>
+            <div>Active Streak Dates: <span id="creative-streak-dates">None</span></div>
+        </div>
+        <div id="tiered-progress" class="progress-item">
+            Tiered Streak: <span id="tiered-streak">0</span> days
+            <div>Max Streak: <span id="tiered-max-streak">0</span></div>
+            <div>Active Streak Dates: <span id="tiered-streak-dates">None</span></div>
+        </div>
     </div>
 
     <!-- Daily Action Panel -->
     <section id="daily-action-panel">
         <h2>Daily Actions</h2>
         <div id="checklist">
-            <label>
-                <input type="checkbox" id="physical-habit"> Physical Habit
-            </label>
-            <label>
-                <input type="checkbox" id="academic-habit"> Academic Habit
-            </label>
-            <label>
-                <input type="checkbox" id="creative-habit"> Creative Habit
-            </label>
-            <label>
-                <input type="checkbox" id="tiered-habit"> Tiered Habit
-            </label>
+            <label><input type="checkbox" id="physical-habit" onclick="completeHabit('physical')"> <span id="physical-label">Physical Habit</span></label>
+            <label><input type="checkbox" id="academic-habit" onclick="completeHabit('academic')"> <span id="academic-label">Academic Habit</span></label>
+            <label><input type="checkbox" id="creative-habit" onclick="completeHabit('creative')"> <span id="creative-label">Creative Habit</span></label>
+            <label><input type="checkbox" id="tiered-habit" onclick="completeHabit('tiered')"> <span id="tiered-label">Tiered Habit</span></label>
         </div>
-
-        <textarea id="reflection" placeholder="Enter your daily reflection..."></textarea>
     </section>
 
-    <!-- Habit Log Section -->
-    <section id="categories">
-        <h2>Physical</h2>
-        <ul id="physical-log" class="habit-log">
-            <!-- Habit items for Physical will go here -->
-        </ul>
-        <button class="add-habit-btn" onclick="addHabit('physical')">Add Physical Habit</button>
-
-        <h2>Academic</h2>
-        <ul id="academic-log" class="habit-log">
-            <!-- Habit items for Academic will go here -->
-        </ul>
-        <button class="add-habit-btn" onclick="addHabit('academic')">Add Academic Habit</button>
-
-        <h2>Creative/Career</h2>
-        <ul id="creative-log" class="habit-log">
-            <!-- Habit items for Creative will go here -->
-        </ul>
-        <button class="add-habit-btn" onclick="addHabit('creative')">Add Creative Habit</button>
-
-        <h2>Tiered</h2>
-        <ul id="tiered-log" class="habit-log">
-            <!-- Habit items for Tiered will go here -->
-        </ul>
-        <button class="add-habit-btn" onclick="addHabit('tiered')">Add Tiered Habit</button>
+    <!-- Habit Completion Calendar -->
+    <section id="calendar">
+        <h2 id="calendar-month-year"></h2> <!-- Month and Year Display -->
+        <div id="calendar-grid"></div>
     </section>
 
     <script src="script.js"></script>
