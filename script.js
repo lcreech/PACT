@@ -50,14 +50,20 @@ function completeHabit(category) {
     }
 }
 
+// Format date to mm/dd/yy
+function formatDate(dateStr) {
+    const [year, month, day] = dateStr.split("-");
+    return `${month}/${day}/${year.slice(2)}`;
+}
+
 // Update the display for streaks, max streaks, and streak dates
 function updateStreakDisplay(category) {
     document.getElementById(`${category}-streak`).innerText = streaks[category];
     document.getElementById(`${category}-max-streak`).innerText = maxStreaks[category];
 
     // Display active streak dates
-    const startDate = streakDates[category][0] || "None";
-    const endDate = streakDates[category][streakDates[category].length - 1] || "None";
+    const startDate = streakDates[category][0] ? formatDate(streakDates[category][0]) : "None";
+    const endDate = streakDates[category][streakDates[category].length - 1] ? formatDate(streakDates[category][streakDates[category].length - 1]) : "None";
     document.getElementById(`${category}-streak-dates`).innerText = `${startDate} to ${endDate}`;
 }
 
