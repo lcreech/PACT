@@ -5,12 +5,17 @@ const streakDates = { physical: [], academic: [], creative: [], tiered: [] };
 const habitLog = { physical: new Set(), academic: new Set(), creative: new Set(), tiered: new Set() };
 const habitNames = { physical: "Physical Habit", academic: "Academic Habit", creative: "Creative Habit", tiered: "Tiered Habit" };
 
-// Load saved habit names from localStorage
+// Load saved habit names from localStorage and update labels
 Object.keys(habitNames).forEach(category => {
     const savedName = localStorage.getItem(`${category}-habit-name`);
     if (savedName) {
         habitNames[category] = savedName;
         document.getElementById(`${category}-label`).textContent = savedName;
+        // Also update the daily action checkboxes
+        const habitCheckboxLabel = document.querySelector(`#${category}-habit + span`);
+        if (habitCheckboxLabel) {
+            habitCheckboxLabel.textContent = savedName;
+        }
     }
 });
 
@@ -29,6 +34,12 @@ function setHabitName(category) {
         habitLabel.textContent = habitNames[category];
         localStorage.setItem(`${category}-habit-name`, habitNames[category]);
         nameInput.value = ""; // Clear input after setting
+
+        // Update the daily action checkbox label
+        const habitCheckboxLabel = document.querySelector(`#${category}-habit + span`);
+        if (habitCheckboxLabel) {
+            habitCheckboxLabel.textContent = habitNames[category];
+        }
     }
 }
 
