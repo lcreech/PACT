@@ -102,6 +102,7 @@ header h1 {
     background-color: #BB86FC;
     color: #121212;
 }
+
 /* Button Styling */
 #toggle-habit-naming {
     background-color: #BB86FC;
@@ -122,4 +123,3 @@ header h1 {
 #habit-naming {
     margin-top: 1em;
 }
-
