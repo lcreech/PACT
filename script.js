@@ -4,6 +4,7 @@ const maxStreaks = { physical: 0, academic: 0, creative: 0, tiered: 0 };
 const streakDates = { physical: [], academic: [], creative: [], tiered: [] };
 const habitLog = { physical: new Set(), academic: new Set(), creative: new Set(), tiered: new Set() };
 const habitNames = { physical: "Physical Habit", academic: "Academic Habit", creative: "Creative Habit", tiered: "Tiered Habit" };
+let selectedDate = null;
 
 // Load saved habit names from localStorage and update labels
 Object.keys(habitNames).forEach(category => {
@@ -43,18 +44,18 @@ function setHabitName(category) {
     }
 }
 
-// Complete habit and update streak
+// Complete habit for selected date or today and update streak
 function completeHabit(category) {
-    const today = new Date().toISOString().split('T')[0];
-    const completedToday = habitLog[category].has(today);
+    const date = selectedDate ? selectedDate : new Date().toISOString().split('T')[0];
+    const completedOnDate = habitLog[category].has(date);
 
-    if (!completedToday) {
-        habitLog[category].add(today);
+    if (!completedOnDate) {
+        habitLog[category].add(date);
         streaks[category]++;
         maxStreaks[category] = Math.max(streaks[category], maxStreaks[category]);
 
         // Update streak dates
-        streakDates[category].push(today);
+        streakDates[category].push(date);
         updateStreakDisplay(category);
 
         renderCalendar();
@@ -82,7 +83,7 @@ function updateStreakDisplay(category) {
 function renderCalendar() {
     const calendarGrid = document.getElementById("calendar-grid");
     const calendarMonthYear = document.getElementById("calendar-month-year");
-    
+
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
@@ -103,7 +104,26 @@ function renderCalendar() {
             dayElement.classList.add("completed");
         }
         dayElement.textContent = day;
+        
+        // Attach click handler to select a date and display completed habits
+        dayElement.addEventListener("click", () => {
+            selectedDate = date;
+            document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('selected'));
+            dayElement.classList.add('selected');
+            loadSelectedDateHabits();
+        });
+
         calendarGrid.appendChild(dayElement);
+    }
+}
+
+// Load selected date's habit completion state into the checkboxes
+function loadSelectedDateHabits() {
+    if (selectedDate) {
+        Object.keys(habitLog).forEach(category => {
+            const checkbox = document.getElementById(`${category}-habit`);
+            checkbox.checked = habitLog[category].has(selectedDate);
+        });
     }
 }
 
