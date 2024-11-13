@@ -80,6 +80,21 @@
         <div id="calendar-grid"></div>
     </section>
 
+    <!-- Habit Selection Modal (Hidden by Default) -->
+    <div id="habit-selection-modal" style="display: none;">
+        <div id="habit-selection-content">
+            <h2>Select Completed Habits for <span id="selected-date"></span></h2>
+            <div>
+                <label><input type="checkbox" id="physical-habit-modal"> <span>Physical Habit</span></label>
+                <label><input type="checkbox" id="academic-habit-modal"> <span>Academic Habit</span></label>
+                <label><input type="checkbox" id="creative-habit-modal"> <span>Creative Habit</span></label>
+                <label><input type="checkbox" id="tiered-habit-modal"> <span>Tiered Habit</span></label>
+            </div>
+            <button onclick="saveCompletedHabits()">Save</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
