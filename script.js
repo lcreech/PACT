@@ -54,8 +54,9 @@ function completeHabit(category) {
         streaks[category]++;
         maxStreaks[category] = Math.max(streaks[category], maxStreaks[category]);
 
-        // Update streak dates
+        // Update streak dates (sort in chronological order)
         streakDates[category].push(date);
+        streakDates[category].sort(); // Sort the dates chronologically
         updateStreakDisplay(category);
 
         renderCalendar();
@@ -73,9 +74,10 @@ function updateStreakDisplay(category) {
     document.getElementById(`${category}-streak`).innerText = streaks[category];
     document.getElementById(`${category}-max-streak`).innerText = maxStreaks[category];
 
-    // Display active streak dates
-    const startDate = streakDates[category][0] ? formatDate(streakDates[category][0]) : "None";
-    const endDate = streakDates[category][streakDates[category].length - 1] ? formatDate(streakDates[category][streakDates[category].length - 1]) : "None";
+    // Display active streak dates in chronological order
+    const sortedDates = streakDates[category].sort(); // Ensure they are in chronological order
+    const startDate = sortedDates[0] ? formatDate(sortedDates[0]) : "None";
+    const endDate = sortedDates[sortedDates.length - 1] ? formatDate(sortedDates[sortedDates.length - 1]) : "None";
     document.getElementById(`${category}-streak-dates`).innerText = `${startDate} to ${endDate}`;
 }
 
