@@ -119,7 +119,49 @@ header h1 {
     background-color: #9b72d7;
 }
 
-/* General Styling */
-#habit-naming {
+/* Modal styling */
+#habit-selection-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#habit-selection-content {
+    background: #1F1F1F;
+    padding: 2em;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 300px;
+    color: #E0E0E0;
+}
+
+#habit-selection-content h2 {
+    color: #BB86FC;
+    margin-bottom: 1em;
+}
+
+#habit-selection-content label {
+    display: block;
+    margin: 0.5em 0;
+}
+
+#habit-selection-content button {
+    background-color: #BB86FC;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
     margin-top: 1em;
+    cursor: pointer;
+    margin-right: 0.5em;
+}
+
+#habit-selection-content button:last-child {
+    background-color: #666666;
 }
