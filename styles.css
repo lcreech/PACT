@@ -103,6 +103,12 @@ header h1 {
     color: #121212;
 }
 
+.selected {
+    border: 2px solid #007bff; /* Blue border for selected date */
+    background-color: #cce5ff;
+    color: #121212;
+}
+
 /* Button Styling */
 #toggle-habit-naming {
     background-color: #BB86FC;
